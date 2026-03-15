@@ -80,7 +80,8 @@ export async function GET() {
         totalProducts: products.length,
         subTotal,
         totalSavings,
-        products
+        products,
+        shippingFee:40
     };
 
     return NextResponse.json(cart);

@@ -1,36 +1,171 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Ecoyaan Checkout Flow – Frontend Assignment
 
-## Getting Started
+## Overview
 
-First, run the development server:
+This project is a simplified checkout flow inspired by Ecoyaan. It demonstrates building a multi-step checkout experience using **Next.js (App Router)** with **Server-Side Rendering (SSR)**, clean component architecture, and responsive UI.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+The application allows users to:
+
+1. Review items in their cart
+2. Enter shipping address details
+3. Confirm the order and simulate a payment
+4. View a success state after completing the checkout
+
+
+---
+
+# HOST URL
+
+* 
+
+---
+
+---
+
+# Tech Stack
+
+* **Next.js (App Router)**
+* **React**
+* **Tailwind CSS**
+* **Context API** for state management
+* **Next.js API Routes** for mock backend data
+
+---
+
+# Architectural Choices
+
+## 1. Next.js App Router
+
+The project uses the **Next.js App Router** to leverage modern features like **React Server Components** and improved routing architecture.
+
+Server components are used to fetch cart data during rendering, demonstrating **server-side rendering (SSR)**.
+
+---
+
+## 2. Server-Side Rendering (SSR)
+
+The cart data is fetched on the server inside the page component using:
+
+```
+fetch("/api/cart", { cache: "no-store" })
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Using `cache: "no-store"` ensures the request is executed **on every request**, making the page behave like traditional SSR (`getServerSideProps` in Pages Router).
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+This ensures:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* Faster initial page load
+* SEO-friendly content
+* Server-rendered data
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 3. State Management
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The **Context API** is used to maintain global state across checkout steps.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Stored state includes:
 
-## Deploy on Vercel
+* Order
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This allows data to persist while navigating between:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* Cart page
+* Address form
+* Payment confirmation page
+
+---
+
+## 4. Component-Based Architecture
+
+Reusable UI components were created to keep the code modular and maintainable.
+
+Examples:
+
+* `CartItem`
+* `OrderSummary`
+* `AddressForm`
+
+This improves readability and makes the UI easier to extend.
+
+---
+
+## 5. Mock Backend
+
+A mock backend API is implemented using **Next.js API Routes**.
+
+Example route:
+
+```
+/api/cart
+```
+
+This returns mock cart data used to render the cart page via SSR.
+
+---
+
+
+# Checkout Flow
+
+1. **Cart Page**
+
+   * Displays cart items fetched via SSR
+   * Shows subtotal, shipping fee, and total
+   * User proceeds to checkout
+
+2. **Shipping Address Page**
+
+   * User enters shipping details
+   * Basic validation for email and phone number
+
+3. **Payment Confirmation Page**
+
+   * Displays order summary and shipping address
+   * User clicks **Pay Securely**
+
+4. **Success Page**
+
+   * Displays order success message
+
+---
+
+# Running the Project Locally
+
+### 1. Clone the repository
+
+```
+git clone https://github.com/MBrahul/ecoyaan_assignment.git
+```
+
+### 2. Navigate to the project
+
+```
+cd ecoyaan_assigment
+```
+
+### 3. Install dependencies
+
+```
+npm install
+```
+
+### 4. Run the development server
+
+```
+npm run dev
+```
+
+### 5. Open the application
+
+Visit:
+
+```
+http://localhost:3000
+```
+
+
+# Deployment
+
+The application can be deployed easily using **Vercel**
+
+---

@@ -26,7 +26,7 @@ const OrderSummary = () => {
                 </div>
                 <div className="w-full flex justify-between text-xl">
                     <p className="">Shipping : </p>
-                    <p className='text-green-600'>Free</p>
+                    <p className={`${(order.shippingFee==0)?'text-green-600':""}`}>{(order.shippingFee==0?("Free"):('₹'+order.shippingFee))}</p>
                 </div>
             </div>
 
@@ -35,7 +35,7 @@ const OrderSummary = () => {
                     <p>You Pay</p>
                 </div>
                 <div>
-                    <p>₹{order.subTotal+order.tax}</p>
+                    <p>₹{order.subTotal + order.tax + order.shippingFee}</p>
                     <p className='text-gray-600 text-xs'>Including ₹{order.tax} in taxes</p>
                 </div>
                 

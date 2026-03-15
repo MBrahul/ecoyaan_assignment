@@ -18,7 +18,7 @@ const Cart = ({ cart }) => {
 
     useEffect(() => {
 
-        setOrder({ ...order, products: cart.products, status: false, subTotal: cart.subTotal, tax: 128, shippingCharge: 0});
+        setOrder({ ...order, products: cart.products, status: false, subTotal: cart.subTotal, tax: 128, shippingFee: cart.shippingFee});
 
     }, []);
 
@@ -61,13 +61,13 @@ const Cart = ({ cart }) => {
                     <p className="text-gray-600">Subtotal : </p>
                     <p>₹{cart.subTotal}</p>
                 </div>
-                <div className="w-full flex justify-between font-semibold text-green-600">
-                    <p className="text-gray-600">Delivery Fee : </p>
-                    <p>Free Delivery</p>
+                <div className="w-full flex justify-between font-semibold text-gray-600">
+                    <p className="">Delivery Fee : </p>
+                    <p className={`${cart.shippingFee?"":"text-green-600"}`}>{cart.shippingFee?('₹'+cart.shippingFee):('Free Delivery')}</p>
                 </div>
                 <div className="border-t border-gray-300 w-full flex justify-between text-xl py-4">
                     <p className="text-gray-600">Grandtotal : </p>
-                    <p>₹{cart.subTotal}</p>
+                    <p>₹{cart.subTotal + cart.shippingFee}</p>
                 </div>
             </div>
 
