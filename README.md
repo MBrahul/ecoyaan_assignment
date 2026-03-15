@@ -16,7 +16,7 @@ The application allows users to:
 
 # HOST URL
 
-* https://ecoyaan-assignment-eta.vercel.app/checkout
+* https://ecoyaan-assignment-eta.vercel.app/
 
 ---
 
