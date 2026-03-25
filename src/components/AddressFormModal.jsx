@@ -4,10 +4,11 @@ import { useContext, useEffect, useState } from "react";
 
 import validate from "@/app/lib/validate";
 import { appContext } from "@/contexts/AppContext";
+import { saveAddressesToLocalStorage } from "@/app/lib/localStorage";
 
 const AddressFormModal = ({ isOpen, onClose, prevAddress }) => {
 
-    const { order, setOrder } = useContext(appContext);
+    const { order, setOrder, addresses, setAddresses } = useContext(appContext);
 
     const inputs = [
         { label: "Full Name", id: "fullName", placeholder: "Enter full name", required: true, type: "text", col: "full" },
@@ -34,7 +35,8 @@ const AddressFormModal = ({ isOpen, onClose, prevAddress }) => {
         state: "",
     });
 
-    const [address, setAddress] = useState({
+    const [data, setData] = useState({
+        id: addresses.length,
         fullName: "",
         mobileNumber: "",
         email: "",
@@ -46,21 +48,28 @@ const AddressFormModal = ({ isOpen, onClose, prevAddress }) => {
         state: "",
     })
 
+
+
     const handleAddAddress = () => {
         try {
             for (let key in errors) {
                 if (errors[key]) return;
             }
-            setOrder({ ...order, address });
+            const temp = addresses?.filter((a) => a.id != data.id);
+            temp.push(data);
+            setAddresses(temp);
+            saveAddressesToLocalStorage("addresses",temp);
+            setOrder({ ...order, address: data });
             onClose();
-        } catch (error) {
 
+        } catch (error) {
+            console.log(error);
         }
     }
 
     useEffect(() => {
 
-        if (prevAddress && Object.keys(prevAddress).length)setAddress(prevAddress);
+        if (prevAddress && Object.keys(prevAddress).length) setData(prevAddress);
 
         const handleEsc = (e) => {
             if (e.key === "Escape") onClose();
@@ -72,6 +81,7 @@ const AddressFormModal = ({ isOpen, onClose, prevAddress }) => {
             document.removeEventListener("keydown", handleEsc);
             document.body.style.overflow = "auto";
         };
+
     }, [isOpen, onClose, prevAddress]);
 
     if (!isOpen) return null;
@@ -116,12 +126,12 @@ const AddressFormModal = ({ isOpen, onClose, prevAddress }) => {
                                     type={input.type}
                                     placeholder={input.placeholder}
                                     className={`h-10 px-3 rounded-lg border ${errors[input.id] ? 'border-red-200' : 'border-gray-200'} bg-white text-sm text-gray-800 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-green-600/20 focus:border-green-500 transition-colors`}
-                                    value={address[input.id]}
+                                    value={data[input.id]}
                                     onChange={(e) => {
-                                        setAddress({ ...address, [input.id]: e.target.value });
+                                        setData({ ...data, [input.id]: e.target.value });
                                     }}
                                     onBlur={(e) => {
-                                        const obj = validate[input.id](address[input.id]);
+                                        const obj = validate[input.id](data[input.id]);
                                         setErrors({
                                             ...errors, [input.id]: obj.error
                                         });

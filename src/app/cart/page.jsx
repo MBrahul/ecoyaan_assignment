@@ -1,3 +1,4 @@
+import ActionBar from "@/components/ActionBar";
 import Cart from "@/components/Cart";
 import { headers } from "next/headers";
 
@@ -19,7 +20,11 @@ const CartPage = async () => {
   const cart = await getCart();
   // console.log(cart);
 
-  return <Cart cart={cart} />;
+  return (
+    <div className="w-full h-fit lg:px-24 px-5 py-5 mb-10">
+      <Cart cart={cart} />
+    </div>
+  );
 };
 
 export default CartPage;
